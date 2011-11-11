@@ -3,8 +3,8 @@
 include(ABS_CORE.DS.'registry.class.php');
 include(ABS_PHPLIB.DS.'functions.php');
 include(ABS_CORE.DS.'dtime.class.php');
-include(ABS_CORE.DS.'authentication.php');
-include(ABS_CORE.DS.'cache.php');
+include(ABS_CORE.DS.'authentication.class.php');
+include(ABS_CORE.DS.'cache.class.php');
 include(ABS_CORE.DS.'access.class.php');
 include(ABS_PHPLIB.DS.'varFilters.php');
 include(ABS_CORE.DS.'error.class.php');

@@ -1,14 +1,14 @@
 <?php
-
 /**
  * application main paths definition
  * 
  * set absolute and relative path in respect to the server os
  *
+ * @package wrappers
  * @version 1.0b
  * @copyright 2011 Otto srl
  * @author abidibo <abidibo@gmail.com> 
- * @license MIT {@link http://www.opensource.org/licenses/mit-license.php}
+ * @license http://www.opensource.org/licenses/mit-license.php MIT license
  */
 
 define('ABS_ADMIN', ABS_ROOT.DS.'admin');
