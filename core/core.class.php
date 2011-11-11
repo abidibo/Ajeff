@@ -1,10 +1,34 @@
 <?php
 
+/**
+ * core 
+ * 
+ * render the whole application 
+ * 
+ * @package Ajeff 
+ * @version 1.0b
+ * @copyright 2011 Otto srl
+ * @author abidibo <abidibo@gmail.com> 
+ * @license MIT {@link http://www.opensource.org/licenses/mit-license.php}
+ */
+
 class core {
 
 	private $_registry, $_base_path, $_site;
 
-	function __construct() {
+	/**
+	 * __construct 
+	 * 
+	 * start session
+	 * include other important files  
+	 * instantiate the registry object and set some properties
+	 * check and set session timeout
+	 * charge extra plugins
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function __construct() {
 
 		session_name(SESSIONNAME);
 		session_start();
@@ -59,6 +83,17 @@ class core {
 
 	}
 
+	/**
+	 * renderApp 
+	 * 
+	 * check for authentication actions
+	 * create the document and flush it 
+	 * 
+	 * @param string $site    available values: 'admin' | 'main'
+	 *                        indicate the user surfing area (front-end or administrative area) 
+	 * @access public
+	 * @return void
+	 */
 	public function renderApp($site=null) {
 		
 		ob_start();
@@ -81,6 +116,15 @@ class core {
 
 	}
 
+	/**
+	 * methodPointer 
+	 * 
+	 * check authentication actions
+	 * print a specific class method outputs called by url 
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function methodPointer() {
 
 		ob_start();
@@ -96,6 +140,14 @@ class core {
 		exit(); 
 	}
 
+	/**
+	 * getTheme 
+	 * 
+	 * charge the used theme 
+	 * 
+	 * @access public
+	 * @return theme | void
+	 */
 	public function getTheme() {
 
 		$rows = $this->_registry->db->autoSelect(array("name"), TBL_THEMES, "active='1'", '');
@@ -104,7 +156,7 @@ class core {
 		if(is_readable(ABS_THEMES.DS.$theme_name.DS.$theme_name.'.php'))
 			require_once(ABS_THEMES.DS.$theme_name.DS.$theme_name.'.php');
 		else 
-			Error::syserrorMessage('coew', 'getTheme', sprintf(__("CantLoadThemeError"), $theme_name, __LINE__));
+			Error::syserrorMessage('core', 'getTheme', sprintf(__("CantLoadThemeError"), $theme_name, __LINE__));
 
 		$theme_class = $theme_name.'Theme';
 

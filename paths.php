@@ -1,4 +1,16 @@
 <?php
+
+/**
+ * application main paths definition
+ * 
+ * set absolute and relative path in respect to the server os
+ *
+ * @version 1.0b
+ * @copyright 2011 Otto srl
+ * @author abidibo <abidibo@gmail.com> 
+ * @license MIT {@link http://www.opensource.org/licenses/mit-license.php}
+ */
+
 define('ABS_ADMIN', ABS_ROOT.DS.'admin');
 define('ABS_UPLOAD', ABS_ROOT.DS.'upload');
 define('ABS_CACHE', ABS_ROOT.DS.'cache');
