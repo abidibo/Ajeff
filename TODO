@@ -1,0 +1,10 @@
+TODO LIST (unordered)
+
+- field interface and field classes
+- model field logic in model class
+- rewriting adminTable
+- use __toString()
+
+- proxy
+
+- see admin folder
