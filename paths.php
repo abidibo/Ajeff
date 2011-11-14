@@ -1,10 +1,10 @@
 <?php
 /**
- * application main paths definition
+ * Application main paths definition
  * 
- * set absolute and relative path in respect to the server os
+ * Set absolute and relative path in respect to the server operating system.
  *
- * @package wrappers
+ * @package Ajeff
  * @version 1.0b
  * @copyright 2011 Otto srl
  * @author abidibo <abidibo@gmail.com> 

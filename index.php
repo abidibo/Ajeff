@@ -1,8 +1,8 @@
 <?php
 /**
- * application entry point, all starts from here, babe
+ * Application entry point, all starts from here, babe
  * 
- * @package wrappers
+ * @package Ajeff
  * @version 1.0b
  * @copyright 2011 Otto srl
  * @author abidibo <abidibo@gmail.com> 
@@ -10,12 +10,12 @@
  */
 
 /**
- * the absolute path to appication root  
+ * The absolute path to appication root. 
  */
 define('ABS_ROOT', realpath(dirname(__FILE__)));
 
 /**
- * the os directory separator 
+ * The os directory separator 
  */
 define('DS', DIRECTORY_SEPARATOR);
 
@@ -25,20 +25,20 @@ include(ABS_CORE.DS.'proxy.class.php');
 include(ABS_CORE.DS.'core.class.php');
 
 /**
- * the relative path to application root 
+ * The relative path to the application root
  */
 define('BASE_PATH', ROOT);
 
 /**
- * set environment variables, re-write SERVER and REQUEST arrays
+ * Set environment variables, re-write SERVER and REQUEST arrays
  *
- * do the work generally done by .htaccess
+ * Do the work generally done by .htaccess file.
  */
 $proxy = new proxy();
 $proxy->setEnvironment();
 
 /**
- * come on babe, let's start creating the final document 
+ * Come on babe, let's start creating the final document 
  */
 $core = new core();
 $core->renderApp();

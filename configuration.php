@@ -1,10 +1,10 @@
 <?php
 /**
- * main configuration file, set here your preferences and settings, babe
+ * Wow, the main configuration file, set here your preferences and settings, babe
  *
- * set session name, application language, dbms parameters, password encryption and debug mode
+ * Set session name, application language, dbms parameters, password encryption and debug mode.
  * 
- * @package wrappers
+ * @package Ajeff
  * @version 1.0b
  * @copyright 2011 Otto srl
  * @author abidibo <abidibo@gmail.com> 
@@ -31,7 +31,7 @@ define('DB_SCHEMA', '');
 define('DB_CHARSET', 'utf8'); 
 
 /**
- * password encryption
+ * Password encryption
  *
  * available values: 'md5' | 'sha1' | ''<br />
  * if empty no crypt method is set
@@ -39,10 +39,10 @@ define('DB_CHARSET', 'utf8');
 define('PWD_HASH', 'md5');
 
 /**
- * debug mode.
-
- * If true system errors are displayed with class, method and line informations.<br /> 
- * If false a custom message is shown (must be passed to the error class).
+ * Debug mode
+ *
+ * If <b>true</b> system errors are displayed with class, method and line informations.<br /> 
+ * If <b>false</b> a custom message is shown (must be passed to the error class).
  */
 define('DEBUG', true);
 
