@@ -36,26 +36,7 @@ AddOutputFilterByType DEFLATE application/x-javascript
 
 RewriteEngine on
 
-RewriteBase /git/jeff/
-
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^(.+[^/])$ $1/  [R]
-
-RewriteRule ^.*favicon.ico$ favicon.ico
-
-RewriteRule ^$ index.php?module=index&method=index&%{QUERY_STRING} [L]
-RewriteRule ^home/$ index.php [L]
-RewriteRule ^login/$ index.php?login [L]
-RewriteRule ^logout/$ index.php?logout [L]
-RewriteRule ^noaccess/$ noaccess.php [L]
-
-RewriteRule ^(\w+)/new/$ index.php?module=$1&method=manage$1 [L]
-RewriteRule ^(\w+)/edit/([0-9]+)/$ index.php?module=$1&method=manage$1&id=$2 [L]
-RewriteRule ^(\w+)/(\w+)/$ index.php?module=$1&method=$2 [L]
-RewriteRule ^(\w+)/(\w+)/([^/]+)/$ index.php?module=$1&method=$2&id=$3&%{QUERY_STRING} [L]
-RewriteRule ^(\w+)/(\w+)/([^/]+)/([^/]+)/([^/]+)/$ index.php?module=$1&method=$2&id=$3&$4=$5&%{QUERY_STRING} [L]
-RewriteRule ^(\w+)/(\w+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)/$ index.php?module=$1&method=$2&id=$3&$4=$5&$6=$7%{QUERY_STRING} [L]
-RewriteRule ^(\w+)/(\w+)/([^/]+)/([^/]+)/$ index.php?module=$1&method=$2&$3=$4 [L]
-RewriteRule ^(\w+)/(\w+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)/$ index.php?module=$1&method=$2&$3=$4&$5=$6 [L]
+RewriteRule ^(.*)$ index.php?$1 [L]

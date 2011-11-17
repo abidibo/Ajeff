@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * router 
+ * 
+ * @package 
+ * @version 1.0b
+ * @copyright 2011 Otto srl
+ * @author abidibo <abidibo@gmail.com> 
+ * @license MIT {@link http://www.opensource.org/licenses/mit-license.php}
+ */
 class router {
 
 	private $_registry, $_base_path;
@@ -9,6 +18,22 @@ class router {
 
 		$this->_registry = $registry;
 		$this->_base_path = $base_path;
+
+		$this->proxy();
+
+	}
+
+	/**
+	 * proxy 
+	 * 
+	 * @access private
+	 * @return void
+	 */
+	private function proxy() {
+		
+		var_dump($_SERVER['QUERY_STRING']);
+		var_dump($_SERVER['REQUEST_URI']);
+		var_dump($_GET);
 
 	}
 
