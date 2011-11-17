@@ -3,9 +3,8 @@
  * Ajeff proxy
  *
  * Ajeff supports permalinks, so that internal urls are something like<br />
- * <code>http://www.example.com/class_name/class_method/param/value</code><br/>
- * Such url must be parsed in order to create the right $_REQUEST and $_SERVER
- * arrays used by the other classes.
+ * <pre>http://www.example.com/class_name/class_method/param/value</pre><br/>
+ * Such url must be parsed in order to create the right $_GET array.
  * 
  * @package proxy
  * @version 1.0b
@@ -15,9 +14,9 @@
  */
 
 /**
- * Parse the permalink url and set all environment variables
+ * Parse the permalink url and set all predefined variables
  *
- * Set $_GET and $_SERVER variables in order to call the right modules and use 
+ * Set $_GET and if needed $_SERVER variables in order to call the right modules and use 
  * url parameters inside methods.
  *
  * @package url-management 
@@ -29,72 +28,95 @@
 class proxy {
 
 	/**
-	 * Set environment variables after parsing the QUERY_STRING 
+	 * Set environment variables after parsing the request uri 
 	 * 
+	 * @param bool $set_server_vars rewrite $_SERVER query string and request uri
 	 * @access public
-	 * @return void
+	 * @return array environment variables
 	 */
-	public function setEnvironment() {
+	public function setEnvironment($set_server_vars = false) {
 	
-		$query_string = $_SERVER['QUERY_STRING'];		
+		// default environment, public site
+		$env = array(
+			'root'=>ROOT,
+			'site'=>'main'	
+		);
+		$script = 'index.php';
+		$get = array();
+
 		$request_uri = $_SERVER['REQUEST_URI'];		
 
-		$url_chunks = explode("/", $query_string);
+		// separate real query_string from permalink part
+		$ru_parts = explode("?", $request_uri);
+		$to_parse = substr(preg_replace("#".preg_quote(ROOT)."#", '', $ru_parts[0]), 1);
+
+		// parse permalink part
+		$url_chunks = explode("/", $to_parse);
+
+		// check administration
+		if(isset($url_chunks[0]) && $url_chunks[0] == 'admin') {
+			$env['root'] = ROOT_ADMIN;
+			$env['site'] = array_shift($url_chunks);
+		}
+
+		// url ending with /
 		$length = count($url_chunks);
 		$length = $url_chunks[$length-1] ? $length : $length-1;
 
-		if($length == 1) {
+		if($length == 0) {
+			$pquery_string = "module=index&method=index";
+		}
+		elseif($length == 1) {
 			if($url_chunks[0] == 'login') {
-				$pquery_string = "login";
-				$_GET = array("login"=>null);
-				$script = "index.php";
+				$pquery_string = 'login=';
 			}
 			elseif($url_chunks[0] == 'logout') {
-				$pquery_string = "logout";
-				$_GET = array("logout"=>null);
-				$script = "index.php";
+				$pquery_string = "logout=";
 			}
 			elseif($url_chunks[0] == 'noaccess') {
 				$pquery_string = "";
-				$_GET = array();
 				$script = "noaccess.php";
 			}
 			else {
-				$pquery_string = "";
-				$_GET = array();
-			}
-			$_SERVER['QUERY_STRING'] = $pquery_string;
-			$_SERVER['REQUEST_URI'] = ROOT."/"
-						. (($script || $pquery_string) ? $script."?".$pquery_string : "");
-		}
-		elseif($length == 2) {
-			$_SERVER['QUERY_STRING'] = "module=".$url_chunks[0]."&method=".$url_chunks[1];
-			$_SERVER['REQUEST_URI'] = ROOT."/index.php?".$_SERVER['QUERY_STRING'];
-			$_GET = array(
-				"module"=>$url_chunks[0],
-				"method"=>$url_chunks[1]	
-			);
+				$pquery_string = "module=index&method=index";
+			}	
 		}
 		elseif($length == 3) {
-			$_SERVER['QUERY_STRING'] = "module=".$url_chunks[0]."&method=".$url_chunks[1]."&id=".$url_chunks[2];
-			$_SERVER['REQUEST_URI'] = ROOT."/index.php?".$_SERVER['QUERY_STRING'];
-			$_GET = array(
-				"module"=>$url_chunks[0],
-				"method"=>$url_chunks[1],	
-				"id"=>$url_chunks[2]	
-			);
+			$pquery_string = "module=".$url_chunks[0]."&method=".$url_chunks[1]."&id=".$url_chunks[2];
 		}
-		elseif($length > 3) {
+		else {
 			$pquery_string = "module=".$url_chunks[0]."&method=".$url_chunks[1];
-			for($i=2; $i<$length; $i+2) {
+			for($i=2; $i<$length; $i += 2) {
 				$parname = $url_chunks[$i];
 				$parvalue = $url_chunks[$i+1];
 				$pquery_string .= "&".$parname."=".$parvalue;
-				$_GET[$parname] = $parvalue;
 			}
-			$_SERVER['QUERY_STRING'] = $pquery_string;
-			$_SERVER['REQUEST_URI'] = ROOT."/index.php?".$_SERVER['QUERY_STRING'];
 		}
+
+		$query_string = (isset($ru_parts[1]) && $ru_parts[1]) 
+			? ($pquery_string ? $pquery_string."&".$ru_parts[1] : $ru_parts[1]) 
+			: $pquery_string;
+
+
+		// set server variables
+		if($set_server_vars) {
+			$_SERVER['QUERY_STRING'] = $query_string;
+			$_SERVER['REQUEST_URI'] = $env['root']."/".$query_string;
+		}
+
+		// and now go with get
+		$_GET = array();
+		foreach(explode("&", $query_string) as $qsp) {
+			if(strpos($qsp, '=')) {
+				$_GET[substr($qsp, 0, strpos($qsp, '='))] = substr($qsp, strpos($qsp, '=')+1); 
+			}
+			else {
+				$_GET[$qsp] = '';	
+			}
+		}
+
+		var_dump($_GET);
+		return $env;
 
 	}
 

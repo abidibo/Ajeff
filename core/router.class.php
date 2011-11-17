@@ -4,7 +4,7 @@
  * router 
  * 
  * @package 
- * @version 
+ * @version 1.0b
  * @copyright 2011 Otto srl
  * @author abidibo <abidibo@gmail.com> 
  * @license MIT {@link http://www.opensource.org/licenses/mit-license.php}

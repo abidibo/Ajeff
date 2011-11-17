@@ -4,9 +4,9 @@
  *
  * Plugins are extra-classes (or group of classes) not included in Ajeff standard release, which 
  * provide more specific functionalities. In order to be instantiated, and used
- * in runtime they must be declared here (and properly installed).
+ * in runtime after installation they must be declared here.
  * 
- * @package wrappers
+ * @package Ajeff
  * @version 1.0b
  * @copyright 2011 Otto srl
  * @author abidibo <abidibo@gmail.com> 

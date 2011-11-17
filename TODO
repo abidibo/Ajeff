@@ -1,5 +1,6 @@
 TODO LIST (unordered)
 
+- cleanInput and friends 
 - field interface and field classes
 - model field logic in model class
 - rewriting adminTable

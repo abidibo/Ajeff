@@ -48,6 +48,7 @@ class layoutController extends controller {
 		access::check($this->_registry, $this->_class_privilege, $this->_admin_privilege, array("exitOnFailure"=>true));
 
 		$id = cleanInput('get', 'id', 'int');
+
 		layout::activateTheme($this->_registry, $id);
 
 		header("Location: ".$this->_router->linkHref($this->_mdl_name, 'manage'));

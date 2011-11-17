@@ -25,22 +25,23 @@ include(ABS_CORE.DS.'proxy.class.php');
 include(ABS_CORE.DS.'core.class.php');
 
 /**
- * The relative path to the application root
- */
-define('BASE_PATH', ROOT);
-
-/**
  * Set environment variables, re-write SERVER and REQUEST arrays
  *
  * Do the work generally done by .htaccess file.
  */
 $proxy = new proxy();
-$proxy->setEnvironment();
+$env = $proxy->setEnvironment();
+
+/**
+ * The relative path to the site root (main or admin)
+ */
+define('BASE_PATH', $env['root']);
+
 
 /**
  * Come on babe, let's start creating the final document 
  */
 $core = new core();
-$core->renderApp();
+$core->renderApp($env['site']);
 
 ?>

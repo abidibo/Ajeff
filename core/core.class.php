@@ -1,11 +1,24 @@
 <?php
+/**
+ * Ajeff core
+ *
+ * This file contains the Ajeff core class, which performs the document printing.
+ *   
+ * @package Ajeff
+ * @version 1.0b
+ * @copyright 2011 Otto srl
+ * @author abidibo <abidibo@gmail.com> 
+ * @license http://www.opensource.org/licenses/mit-license.php MIT license
+ */
 
 /**
- * core 
+ * Ajeff core class 
  * 
- * render the whole application 
+ * It's the class that actually outputs the document. Can print the whole document
+ * charging the right theme and template, but also a single class method output,
+ * feature useful to perform ajax requests.
  * 
- * @package Ajeff 
+ * @package url-management 
  * @version 1.0b
  * @copyright 2011 Otto srl
  * @author abidibo <abidibo@gmail.com> 
@@ -54,7 +67,7 @@ class core {
 		$this->_registry->css = array();
 		$this->_registry->js = array();
 
-		//set session timeout
+		// set session timeout
 		if($this->_registry->site_settings->session_timeout) {
 			if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $this->_registry->site_settings->session_timeout)) {
 				// last request was more than timeout seconds ago
@@ -94,12 +107,12 @@ class core {
 	 * @access public
 	 * @return void
 	 */
-	public function renderApp($site=null) {
+	public function renderApp($site) {
 		
 		ob_start();
 		
 		// some other registry properties
-		$this->_registry->site = $site=='admin' ? 'admin':'main';
+		$this->_registry->site = $site;
 
 		/*
 		 * check login/logout
